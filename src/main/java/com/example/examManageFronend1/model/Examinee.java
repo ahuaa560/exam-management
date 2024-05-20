@@ -1,4 +1,4 @@
-package com.example.examManage.model;
+package com.example.examManageFronend1.model;
 
 
 public class Examinee {

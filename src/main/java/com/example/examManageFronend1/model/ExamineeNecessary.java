@@ -1,4 +1,4 @@
-package com.example.examManage.model;
+package com.example.examManageFronend1.model;
 
 public class ExamineeNecessary {
     String examExamineeNumber;//考生考试号

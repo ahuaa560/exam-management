@@ -1,4 +1,4 @@
-package com.example.examManage.model;
+package com.example.examManageFronend1.model;
 
 public class ExamTeacher {
     String teacherIdNumber;//监考老师身份证号

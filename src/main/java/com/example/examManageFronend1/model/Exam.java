@@ -1,4 +1,4 @@
-package com.example.examManage.model;
+package com.example.examManageFronend1.model;
 
 import java.time.LocalDate;
 
@@ -30,7 +30,7 @@ public class Exam {
     public void setPayment(int payment) { this.payment = payment; }
     public String getExamName() { return examName; }
     public void setExamName(String examName) { this.examName = examName; }
-    public void setExamForm(ExamApplyInformation.examForm examForm) { examForm = examForm; }
+
     @Override
     public String toString() {
         return "Exam [examId=" + examId + ", startApplyTime=" + startApplyTime

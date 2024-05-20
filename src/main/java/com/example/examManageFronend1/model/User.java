@@ -1,10 +1,10 @@
-package com.example.examManage.model;
+package com.example.examManageFronend1.model;
 
 public class User {
 
     String userId;
     String password;
-    com.example.examManage.model.userType userType;
+    com.example.examManageFronend1.model.userType userType;
 
     public String getUserId() {
         return userId;
@@ -24,11 +24,11 @@ public class User {
 
 
 
-    public com.example.examManage.model.userType getUserType() {
+    public com.example.examManageFronend1.model.userType getUserType() {
         return userType;
     }
 
-    public void setUserType(com.example.examManage.model.userType userType) {
+    public void setUserType(com.example.examManageFronend1.model.userType userType) {
         this.userType = userType;
     }
 
