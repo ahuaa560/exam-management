@@ -1,4 +1,4 @@
-package com.example.examManage.controller;
+package com.example.examManageFronend1.controller;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,6 +1,6 @@
-package com.example.examManage.mapper;
+package com.example.examManageFronend1.mapper;
 
-import com.example.examManage.model.User;
+import com.example.examManageFronend1.model.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

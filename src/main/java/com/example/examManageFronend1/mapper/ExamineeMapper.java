@@ -1,6 +1,6 @@
-package com.example.examManage.mapper;
+package com.example.examManageFronend1.mapper;
 
-import com.example.examManage.model.Examinee;
+import com.example.examManageFronend1.model.Examinee;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

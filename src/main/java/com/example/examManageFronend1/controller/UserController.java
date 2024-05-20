@@ -1,8 +1,8 @@
-package com.example.examManage.controller;
+package com.example.examManageFronend1.controller;
 
-import com.example.examManage.model.User;
-import com.example.examManage.model.userType;
-import com.example.examManage.service.UserService;
+import com.example.examManageFronend1.model.User;
+import com.example.examManageFronend1.model.userType;
+import com.example.examManageFronend1.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

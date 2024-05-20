@@ -1,8 +1,8 @@
-package com.example.examManage.service;
+package com.example.examManageFronend1.service;
 
-import com.example.examManage.mapper.UserMapper;
-import com.example.examManage.model.User;
-import com.example.examManage.model.userType;
+import com.example.examManageFronend1.mapper.UserMapper;
+import com.example.examManageFronend1.model.User;
+import com.example.examManageFronend1.model.userType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

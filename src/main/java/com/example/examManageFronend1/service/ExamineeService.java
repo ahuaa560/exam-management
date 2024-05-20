@@ -1,7 +1,8 @@
-package com.example.examManage.service;
+package com.example.examManageFronend1.service;
 
-import com.example.examManage.mapper.ExamineeMapper;
-import com.example.examManage.model.Examinee;
+import com.example.examManageFronend1.algorithm.RandomNineDigitNumber;
+import com.example.examManageFronend1.mapper.ExamineeMapper;
+import com.example.examManageFronend1.model.Examinee;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

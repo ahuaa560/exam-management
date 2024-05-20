@@ -1,12 +1,11 @@
-package com.example.examManage.controller;
+package com.example.examManageFronend1.controller;
 
-import com.example.examManage.model.Examinee;
-import com.example.examManage.model.User;
-import com.example.examManage.service.ExamineeService;
-import com.example.examManage.service.UserService;
+import com.example.examManageFronend1.model.Examinee;
+import com.example.examManageFronend1.service.ExamineeService;
+import com.example.examManageFronend1.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.examManage.model.userType.individual;
+import static com.example.examManageFronend1.model.userType.individual;
 
 @RestController
 @RequestMapping("/examinee")
