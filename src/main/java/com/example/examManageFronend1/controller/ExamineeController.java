@@ -2,28 +2,32 @@ package com.example.examManageFronend1.controller;
 
 import com.example.examManageFronend1.model.Examinee;
 import com.example.examManageFronend1.service.ExamineeService;
-import com.example.examManageFronend1.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.examManageFronend1.model.userType.individual;
 
 @RestController
 @RequestMapping("/examinee")
 public class ExamineeController {
 
     private final ExamineeService examineeService;
-    private final UserService userService;
+    //private final UserService userService;
 
-    public ExamineeController(ExamineeService examineeService, UserService userService) {
+    public ExamineeController(ExamineeService examineeService) {
         this.examineeService = examineeService;
-        this.userService = userService;
     }
 
     @PostMapping("/")
-    public void createExaminee(@RequestParam String password, @RequestBody Examinee examinee) {
-        String userId = userService.createUser(password, individual);
-        examinee.setUserId(userId);
-        examineeService.insertExaminee(examinee);
+    public ResponseEntity<?> createExaminee(@RequestParam String password, @RequestBody Examinee examinee) {
+        //String userId = userService.createUser(password, individual);
+        //examinee.setUserId(userId);
+        try{
+            examineeService.insertExaminee(password,examinee);
+            return ResponseEntity.ok("create examinee successfully");
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @GetMapping("/{userId}")

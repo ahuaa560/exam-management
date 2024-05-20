@@ -15,6 +15,7 @@ public interface UserMapper {
     List<User> findAll();
 
     @Insert("INSERT INTO user( password, user_type) VALUES( #{password}, #{userType})")
+    @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "user_id")
     void insert(User user);
 
     @Update("UPDATE user SET password = #{password}, user_type = #{userType} WHERE user_id = #{userId}")
@@ -22,5 +23,8 @@ public interface UserMapper {
 
     @Delete("DELETE FROM user WHERE id = #{usrId}")
     void delete(String userId);
+
+    @Select("SELECT * FROM user WHERE user_id=#{userId} ")
+    User findByUserId(String userId);
 }
 
