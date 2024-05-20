@@ -16,7 +16,11 @@ public class ExamineeService {
     public List<Examinee> getAllExaminee() {
         return examineeMapper.findAll();
     }
-    public void insertExaminee(Examinee examinee) {
+     public void insertExaminee(Examinee examinee) {
+
+        RandomNineDigitNumber randomNineDigitNumber=new RandomNineDigitNumber();
+        examinee.setExamineeIDNumber(randomNineDigitNumber.generateRandomNineDigitNumber());
+        examinee.setWhiteListed(true);
         examineeMapper.insertExaminee(examinee);
     }
 
