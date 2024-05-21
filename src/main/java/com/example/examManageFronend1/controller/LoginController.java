@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/login")
 public class LoginController {
@@ -40,12 +44,19 @@ public class LoginController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("未找到该考生");
             }
 
-
             User user = userService.findByUserId(examinee.getUserId());
             if (user != null && user.getPassword().equals(password)) {
-                return ResponseEntity.ok("Login successful,考生id:" + examinee.getUserId());
+                Map<String, Object> responseBody = new HashMap<>();
+                responseBody.put("success", true);
+                responseBody.put("message", "Login successful!");
+                responseBody.put("userId", user.getUserId());
+                return ResponseEntity.ok(responseBody);
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+                Map<String, Object> responseBody = new HashMap<>();
+                responseBody.put("success", false);
+                responseBody.put("error", "Login failed. Invalid username or password.");
+                responseBody.put("userId", null);
+                return ResponseEntity.badRequest().body(responseBody);
             }
             //机构
         } else if (Objects.equals(usertype, "edu")) {
