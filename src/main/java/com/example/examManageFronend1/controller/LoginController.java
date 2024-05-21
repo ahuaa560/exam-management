@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/login")
 public class LoginController {
@@ -31,11 +33,13 @@ public class LoginController {
     ResponseEntity<?> login(@RequestParam String identifier, @RequestParam String password, @RequestParam userType usertype) {
    //考生
         if (usertype == userType.individual) {
-            Examinee examinee = examineeService.findByIdNumberOrEmailOrPhone(identifier, identifier, identifier);
-            System.out.println(examinee.toString());
-            if (examinee == null) {
+            try {
+                Examinee examinee = examineeService.findByIdNumberOrEmailOrPhone(identifier, identifier, identifier);
+                System.out.println(examinee.toString());
+            } catch (NoSuchElementException e) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("未找到该考生");
             }
+
 
             User user = userService.findByUserId(examinee.getUserId());
             if (user != null && user.getPassword().equals(password)) {
