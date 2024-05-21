@@ -42,4 +42,3 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE user_id=#{userId} ")
     User findByUserId(String userId);
 }
-

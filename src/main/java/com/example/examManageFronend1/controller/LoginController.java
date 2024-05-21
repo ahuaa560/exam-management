@@ -1,19 +1,20 @@
 package com.example.examManageFronend1.controller;
 
-import com.example.examManageFronend1.model.Examinee;
-import com.example.examManageFronend1.model.Organization;
-import com.example.examManageFronend1.model.User;
-import com.example.examManageFronend1.model.userType;
+import com.example.examManageFronend1.model.*;
 import com.example.examManageFronend1.service.ExamineeService;
 import com.example.examManageFronend1.service.OrganizationService;
 import com.example.examManageFronend1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/login")
@@ -27,24 +28,38 @@ public class LoginController {
     @Autowired
     private OrganizationService organizationService;
 
-    @GetMapping("")
-    ResponseEntity<?> login(@RequestParam String identifier, @RequestParam String password, @RequestParam userType usertype) {
+    @PostMapping("")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        String identifier = loginRequest.getIdentifier();
+        String password = loginRequest.getPassword();
+        String usertype = loginRequest.getUsertype();
+
    //考生
-        if (usertype == userType.individual) {
-            Examinee examinee = examineeService.findByIdNumberOrEmailOrPhone(identifier, identifier, identifier);
-            System.out.println(examinee.toString());
-            if (examinee == null) {
+        if (Objects.equals(usertype, "individual")) {
+            Examinee examinee;
+            try {
+                examinee = examineeService.findByIdNumberOrEmailOrPhone(identifier, identifier, identifier);
+                System.out.println(examinee.toString());
+            } catch (NoSuchElementException e) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("未找到该考生");
             }
 
             User user = userService.findByUserId(examinee.getUserId());
             if (user != null && user.getPassword().equals(password)) {
-                return ResponseEntity.ok("Login successful,考生id:" + examinee.getUserId());
+                Map<String, Object> responseBody = new HashMap<>();
+                responseBody.put("success", true);
+                responseBody.put("message", "Login successful!");
+                responseBody.put("userId", user.getUserId());
+                return ResponseEntity.ok(responseBody);
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+                Map<String, Object> responseBody = new HashMap<>();
+                responseBody.put("success", false);
+                responseBody.put("error", "Login failed. Invalid username or password.");
+                responseBody.put("userId", null);
+                return ResponseEntity.badRequest().body(responseBody);
             }
             //机构
-        } else if (usertype == userType.edu) {
+        } else if (Objects.equals(usertype, "edu")) {
             Organization organization = organizationService.findByUserId(identifier);
             if (organization == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("找不到该机构");
