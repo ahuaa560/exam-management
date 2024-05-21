@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @RestController
@@ -31,11 +32,14 @@ public class LoginController {
 
    //考生
         if (Objects.equals(usertype, "individual")) {
-            Examinee examinee = examineeService.findByIdNumberOrEmailOrPhone(identifier, identifier, identifier);
-            System.out.println(examinee.toString());
-            if (examinee == null) {
+            Examinee examinee;
+            try {
+                examinee = examineeService.findByIdNumberOrEmailOrPhone(identifier, identifier, identifier);
+                System.out.println(examinee.toString());
+            } catch (NoSuchElementException e) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("未找到该考生");
             }
+
 
             User user = userService.findByUserId(examinee.getUserId());
             if (user != null && user.getPassword().equals(password)) {
