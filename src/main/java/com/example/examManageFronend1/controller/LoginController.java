@@ -1,19 +1,15 @@
 package com.example.examManageFronend1.controller;
 
-import com.example.examManageFronend1.model.Examinee;
-import com.example.examManageFronend1.model.Organization;
-import com.example.examManageFronend1.model.User;
-import com.example.examManageFronend1.model.userType;
+import com.example.examManageFronend1.model.*;
 import com.example.examManageFronend1.service.ExamineeService;
 import com.example.examManageFronend1.service.OrganizationService;
 import com.example.examManageFronend1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,8 +27,12 @@ public class LoginController {
     @Autowired
     private OrganizationService organizationService;
 
-    @GetMapping("")
-    ResponseEntity<?> login(@RequestParam String identifier, @RequestParam String password, @RequestParam userType usertype) {
+    @PostMapping("")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        String identifier = loginRequest.getIdentifier();
+        String password = loginRequest.getPassword();
+        String usertype = loginRequest.getUsertype();
+
    //考生
         if (usertype == userType.individual) {
             Examinee examinee;
@@ -60,7 +60,7 @@ public class LoginController {
             }
 
             //机构
-        } else if (usertype == userType.edu) {
+        } else if (Objects.equals(usertype, "edu")) {
             Organization organization = organizationService.findByUserId(identifier);
             if (organization == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("找不到该机构");
