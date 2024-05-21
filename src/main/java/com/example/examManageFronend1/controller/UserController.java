@@ -1,7 +1,6 @@
 package com.example.examManageFronend1.controller;
 
 import com.example.examManageFronend1.model.User;
-import com.example.examManageFronend1.model.userType;
 import com.example.examManageFronend1.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getAccountById(@PathVariable String id) {
+    public User getUserById(@PathVariable String id) {
         return userService.getUserById(id);
     }
 
