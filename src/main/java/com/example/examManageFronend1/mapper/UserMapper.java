@@ -8,9 +8,19 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
+    @Results({
+            @Result(property = "userId",column = "user_id"),
+            @Result(property = "password",column = "password"),
+            @Result(property = "userType",column = "user_type")
+    })
     @Select("SELECT * FROM user WHERE user_id = #{userId}")
     User findById(String userId);
 
+    @Results({
+            @Result(property = "userId",column = "user_id"),
+            @Result(property = "password",column = "password"),
+            @Result(property = "userType",column = "user_type")
+    })
     @Select("SELECT * FROM user")
     List<User> findAll();
 
@@ -24,6 +34,11 @@ public interface UserMapper {
     @Delete("DELETE FROM user WHERE id = #{usrId}")
     void delete(String userId);
 
+    @Results({
+            @Result(property = "userId",column = "user_id"),
+            @Result(property = "password",column = "password"),
+            @Result(property = "userType",column = "user_type")
+    })
     @Select("SELECT * FROM user WHERE user_id=#{userId} ")
     User findByUserId(String userId);
 }
