@@ -1,10 +1,10 @@
 package com.example.examManageFronend1.service;
 
+import com.example.examManageFronend1.mapper.ExamApplyInformationMapper;
+import com.example.examManageFronend1.mapper.ExamMapper;
 import com.example.examManageFronend1.mapper.ExamineeMapper;
 import com.example.examManageFronend1.mapper.UserMapper;
-import com.example.examManageFronend1.model.Examinee;
-import com.example.examManageFronend1.model.User;
-import com.example.examManageFronend1.model.userType;
+import com.example.examManageFronend1.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +14,14 @@ public class ExamineeService {
 
     private final ExamineeMapper examineeMapper;
     private final UserMapper userMapper;
+    private final ExamApplyInformationMapper examApplyInformationMapper;
+    private final ExamMapper examMapper;
 
-    public ExamineeService(ExamineeMapper examineeMapper, UserMapper userMapper) {
+    public ExamineeService(ExamineeMapper examineeMapper, UserMapper userMapper, ExamApplyInformationMapper examApplyInformationMapper, ExamMapper examMapper) {
         this.examineeMapper = examineeMapper;
         this.userMapper = userMapper;
+        this.examApplyInformationMapper = examApplyInformationMapper;
+        this.examMapper = examMapper;
     }
     public List<Examinee> getAllExaminee() {
         return examineeMapper.findAll();
@@ -51,8 +55,8 @@ public class ExamineeService {
     }
 
 
-    public Examinee getExamineeById(String userId) {
-        return examineeMapper.getExamineeById(userId);
+    public Examinee getExamineeByUserId(String userId) {
+        return examineeMapper.getExamineeByUserId(userId);
     }
 
     public void updateExaminee(Examinee examinee) {
@@ -66,4 +70,14 @@ public class ExamineeService {
     public Examinee findByIdNumberOrEmailOrPhone(String idNumber, String email, String phone) {
         return examineeMapper.findByIdNumberOrEmailOrPhone(idNumber, email, phone);
     }
+
+    public List<Exam> getActiveExams() {
+        return examMapper.getActiveExams();
+    }
+
+    public List<ExamApplyInformation> getExamApplyInformationByUserId(String userId) {
+        return examApplyInformationMapper.getExamApplyInformationByUserId(userId);
+    }
+
+
 }

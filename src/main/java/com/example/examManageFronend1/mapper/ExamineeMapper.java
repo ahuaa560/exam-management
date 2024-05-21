@@ -33,10 +33,6 @@ public interface ExamineeMapper {
     int countByEmail(String examineeEmail);
 
 
-
-    @Select("SELECT * FROM examinee WHERE user_id = #{userId}")
-    Examinee getExamineeById(String userId);
-
     @Results({
             @Result(property = "userId",column ="user_id" ,jdbcType = JdbcType.INTEGER),
             @Result(property ="whiteListed",column = "white_listed",jdbcType = JdbcType.TINYINT),
@@ -46,6 +42,10 @@ public interface ExamineeMapper {
             @Result(property ="examineeEmail",column = "examinee_email"),
             @Result(property ="organizationName",column = "organization_name")
     })
+    @Select("SELECT * FROM examinee WHERE user_id = #{userId}")
+    Examinee getExamineeByUserId(String userId);
+
+
     @Update("UPDATE examinee SET white_listed = #{whiteListed}, examinee_name = #{examineeName}, examinee_ID_number = #{examineeIDNumber}, " +
             "examinee_email = #{examineeEmail}, examinee_phone = #{examineePhone}, organization_name = #{organizationName} WHERE user_id = #{userId}")
     void updateExaminee(Examinee examinee);
@@ -64,4 +64,5 @@ public interface ExamineeMapper {
     })
     @Select("SELECT * FROM examinee WHERE examinee_ID_number = #{idNumber} OR examinee_email = #{email} OR examinee_phone = #{phone}")
     Examinee findByIdNumberOrEmailOrPhone(String idNumber, String email, String phone);
+
 }
