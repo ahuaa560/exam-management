@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -122,9 +122,9 @@ public class ExamineeController {
 
         private String examId;
         private String examName;
-        private LocalDate startExamTime;
-        private LocalDate endExamTime;
-        private LocalDate endApplyTime;
+        private LocalDateTime startExamTime;
+        private LocalDateTime endExamTime;
+        private LocalDateTime endApplyTime;
         private String status;
 
         // Constructors, getters, setters
@@ -143,27 +143,27 @@ public class ExamineeController {
             this.examName = examName;
         }
 
-        public LocalDate getStartExamTime() {
+        public LocalDateTime getStartExamTime() {
             return startExamTime;
         }
 
-        public void setStartExamTime(LocalDate startExamTime) {
+        public void setStartExamTime(LocalDateTime startExamTime) {
             this.startExamTime = startExamTime;
         }
 
-        public LocalDate getEndExamTime() {
+        public LocalDateTime getEndExamTime() {
             return endExamTime;
         }
 
-        public void setEndExamTime(LocalDate endExamTime) {
+        public void setEndExamTime(LocalDateTime endExamTime) {
             this.endExamTime = endExamTime;
         }
 
-        public LocalDate getEndApplyTime() {
+        public LocalDateTime getEndApplyTime() {
             return endApplyTime;
         }
 
-        public void setEndApplyTime(LocalDate endApplyTime) {
+        public void setEndApplyTime(LocalDateTime endApplyTime) {
             this.endApplyTime = endApplyTime;
         }
 

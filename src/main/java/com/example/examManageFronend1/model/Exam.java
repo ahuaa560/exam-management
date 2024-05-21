@@ -2,15 +2,15 @@ package com.example.examManageFronend1.model;
 
 import lombok.Getter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 public class Exam {
-    public LocalDate getStartExamTime() {
+    public LocalDateTime getStartExamTime() {
         return startExamTime;
     }
 
-    public void setStartExamTime(LocalDate startExamTime) {
+    public void setStartExamTime(LocalDateTime startExamTime) {
         this.startExamTime = startExamTime;
     }
 
@@ -22,27 +22,27 @@ public class Exam {
         this.examId = examId;
     }
 
-    public LocalDate getStartApplyTime() {
+    public LocalDateTime getStartApplyTime() {
         return startApplyTime;
     }
 
-    public void setStartApplyTime(LocalDate startApplyTime) {
+    public void setStartApplyTime(LocalDateTime startApplyTime) {
         this.startApplyTime = startApplyTime;
     }
 
-    public LocalDate getEndApplyTime() {
+    public LocalDateTime getEndApplyTime() {
         return endApplyTime;
     }
 
-    public void setEndApplyTime(LocalDate endApplyTime) {
+    public void setEndApplyTime(LocalDateTime endApplyTime) {
         this.endApplyTime = endApplyTime;
     }
 
-    public LocalDate getEndExamTime() {
+    public LocalDateTime getEndExamTime() {
         return endExamTime;
     }
 
-    public void setEndExamTime(LocalDate endExamTime) {
+    public void setEndExamTime(LocalDateTime endExamTime) {
         this.endExamTime = endExamTime;
     }
 
@@ -71,10 +71,10 @@ public class Exam {
     }
 
     private String examId; // 考试ID
-    private LocalDate startApplyTime; // 开始报名时间
-    private LocalDate endApplyTime; // 结束报名时间
-    private LocalDate startExamTime; // 开始考试时间
-    private LocalDate endExamTime; // 结束考试时间
+    private LocalDateTime startApplyTime; // 开始报名时间
+    private LocalDateTime endApplyTime; // 结束报名时间
+    private LocalDateTime startExamTime; // 开始考试时间
+    private LocalDateTime endExamTime; // 结束考试时间
     private int examPayment; // 考试费用
     private String examName; // 考试名称
     private ExamForm examForm; // 考试类型
