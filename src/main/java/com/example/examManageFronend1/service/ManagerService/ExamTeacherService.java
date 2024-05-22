@@ -1,4 +1,4 @@
-package com.example.examManageFronend1.service;
+package com.example.examManageFronend1.service.ManagerService;
 
 
 import com.example.examManageFronend1.mapper.ExamTeacherMapper;
