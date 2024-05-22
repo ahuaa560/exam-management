@@ -1,20 +1,24 @@
 package com.example.examManageFronend1.controller;
 
-import com.example.examManageFronend1.model.*;
+import com.example.examManageFronend1.model.Examinee;
+import com.example.examManageFronend1.model.LoginRequest;
+import com.example.examManageFronend1.model.Organization;
+import com.example.examManageFronend1.model.User;
 import com.example.examManageFronend1.service.ExamineeService;
 import com.example.examManageFronend1.service.OrganizationService;
 import com.example.examManageFronend1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/login")
@@ -66,7 +70,13 @@ public class LoginController {
             }
             User user = userService.findByUserId(identifier);
             if (user != null && user.getPassword().equals(password)) {
-                return ResponseEntity.ok("Login successful,机构id:" + organization.getOrganizationNumber() + ",机构名称:" + organization.getOrganizationName());
+                Map<String, Object> responseBody = new HashMap<>();
+                responseBody.put("success", true);
+                responseBody.put("message", "Login successful!");
+                responseBody.put("organizationId", organization.getOrganizationNumber());
+                responseBody.put("userId", organization.getOrganizationName());
+                return ResponseEntity.ok(responseBody);
+                //return ResponseEntity.ok("Login successful,机构id:" + organization.getOrganizationNumber() + ",机构名称:" + organization.getOrganizationName());
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
             }
@@ -77,7 +87,12 @@ public class LoginController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("该账号不存在");
             }
             if (user != null && user.getPassword().equals(password)) {
-                return ResponseEntity.ok("Login successful,管理员id:" + user.getUserId());
+
+                Map<String, Object> responseBody = new HashMap<>();
+                responseBody.put("success", true);
+                responseBody.put("message", "Login successful!");
+                responseBody.put("userId", user.getUserId());
+                return ResponseEntity.ok(responseBody);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
             }
