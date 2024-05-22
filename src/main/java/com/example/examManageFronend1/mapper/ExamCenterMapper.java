@@ -2,15 +2,8 @@ package com.example.examManageFronend1.mapper;
 
 
 import com.example.examManageFronend1.model.ExamCenter;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Update;
-import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 
 @Mapper
@@ -44,5 +37,16 @@ public interface ExamCenterMapper {
 
     @Delete("DELETE FROM exam_center WHERE exam_center_id = #{examCenterId}")
     void deleteExamCenter(@Param("examCenterId") String examCenterId);
+
+
+
+    @Results({
+            @Result(property = "examCenterId", column = "exam_center_id"),
+            @Result(property = "examCenterName", column = "exam_center_name"),
+            @Result(property = "regionId", column = "region_id"),
+            @Result(property = "examCenterLocation", column = "exam_center_location")
+    })
+    @Select("SELECT * FROM exam_center WHERE region_id = #{regionId}")
+    List<ExamCenter> getExamCentersByRegionId(String regionId);
 
 }

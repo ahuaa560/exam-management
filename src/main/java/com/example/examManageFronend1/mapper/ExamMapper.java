@@ -18,7 +18,7 @@ public interface ExamMapper {
     @Insert("INSERT INTO exam (exam_id, exam_form, start_apply_time, end_apply_time, start_exam_time, end_exam_time, exam_payment, exam_name) VALUES ( #{examId}, #{examForm}, #{startApplyTime}, #{endApplyTime}, #{startExamTime}, #{endExamTime}, #{examPayment}, #{examName})")
     int insert(Exam exam);
 
-    @Delete("DELETE FROM exam WHERE id = #{examId}")
+    @Delete("DELETE FROM exam WHERE exam_id = #{examId}")
     void deleteById(String examId);
 
     @Results({
@@ -44,6 +44,6 @@ public interface ExamMapper {
             @Result(property ="examPayment",column = "exam_payment"),
             @Result(property ="examName",column = "exam_name")
     })
-    @Select("SELECT * FROM Exam WHERE examId = #{examId}")
-    Exam getExamById(String examId);
+    @Select("SELECT * FROM exam WHERE exam_id = #{examId}")
+    Exam getExamByExamId(String examId);
 }

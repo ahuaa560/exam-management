@@ -65,10 +65,11 @@ public class ExamineeController {
     @GetMapping("/exam/{userId}")
     public ExamineeExamInfo getExamineeExamInfo(@PathVariable String userId) {
         Examinee examinee = examineeService.getExamineeByUserId(userId);
+        String examineeName = examinee.getExamineeName();
         List<Exam> exams = examineeService.getActiveExams();
         List<ExamApplyInformation> examApplyInfos = examineeService.getExamApplyInformationByUserId(userId);
 
-        userInfo userInfo=new userInfo(examinee.getExamineeName(),"individual");
+        UserInfo userInfo = new UserInfo(examineeName, "individual");
 
         List<ExamInfo> examInfoList = exams.stream().map(exam -> {
             ExamInfo examInfo = new ExamInfo();
@@ -96,6 +97,7 @@ public class ExamineeController {
 
         return new ExamineeExamInfo(userInfo, examInfoList);
     }
+
 
     static class ExamineeInfo{
 
@@ -125,11 +127,11 @@ public class ExamineeController {
     }
 
     static class ExamineeExamInfo {
-        private userInfo userInfoList;
+        private UserInfo userInfoList;
         private List<ExamInfo> examInfoList;
 
         // Constructors, getters, setters
-        public ExamineeExamInfo(userInfo userInfoList, List<ExamInfo> examInfoList) {
+        public ExamineeExamInfo(UserInfo userInfoList, List<ExamInfo> examInfoList) {
             this.userInfoList=userInfoList;
             this.examInfoList = examInfoList;
         }
@@ -142,6 +144,14 @@ public class ExamineeController {
 
         public void setExamInfoList(List<ExamInfo> examInfoList) {
             this.examInfoList = examInfoList;
+        }
+
+        public UserInfo getUserInfoList() {
+            return userInfoList;
+        }
+
+        public void setUserInfoList(UserInfo userInfoList) {
+            this.userInfoList = userInfoList;
         }
     }
 
@@ -203,11 +213,11 @@ public class ExamineeController {
         }
     }
 
-    static class userInfo{
+    static class UserInfo {
         private String name;
         private String user_type;
 
-        public userInfo(String name,String user_type) {
+        public UserInfo(String name, String user_type) {
             this.name = name;
             this.user_type = user_type;
         }
