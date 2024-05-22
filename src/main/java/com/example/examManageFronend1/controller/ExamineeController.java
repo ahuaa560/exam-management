@@ -19,7 +19,6 @@ public class ExamineeController {
 
     @Autowired
     private final ExamineeService examineeService;
-    //private final UserService userService;
 
 
 
@@ -28,11 +27,16 @@ public class ExamineeController {
         this.examineeService = examineeService;
     }
 
-    @PostMapping("/")
-    public ResponseEntity<?> createExaminee(@RequestParam String password, @RequestBody Examinee examinee) {
-        //String userId = userService.createUser(password, individual);
-        //examinee.setUserId(userId);
+    //考生注册
+    @PostMapping("")
+    public ResponseEntity<?> createExaminee(@RequestBody ExamineeInfo examineeInfo) {
         try{
+            Examinee examinee=new Examinee();
+            String password= examineeInfo.getPassword();
+            examinee.setExamineeEmail(examineeInfo.getExamineeEmail());
+            examinee.setExamineePhone(examineeInfo.getExamineePhone());
+            examinee.setExamineeName(examineeInfo.getExamineeName());
+            examinee.setExamineeIDNumber(examineeInfo.getExamineeIDNumber());
             examineeService.insertExaminee(password,examinee);
             return ResponseEntity.ok("create examinee successfully");
         }catch (Exception e) {
@@ -89,6 +93,33 @@ public class ExamineeController {
         }).collect(Collectors.toList());
 
         return new ExamineeExamInfo(examinee.getExamineeName(), examInfoList);
+    }
+
+    static class ExamineeInfo{
+
+
+        String examineeName;//数据库：examinee_name
+        String examineeIDNumber;//数据库：examinee_ID_number
+        String examineeEmail;//数据库：examinee_email
+        String examineePhone;//数据库：examinee_phone
+        String password;
+
+        public String getExamineeEmail() {
+            return examineeEmail;
+        }
+        public String getExamineePhone() {
+            return examineePhone;
+        }
+        public String getPassword() {
+            return password;
+        }
+        public String getExamineeName() {
+            return examineeName;
+        }
+
+        public String getExamineeIDNumber() {
+            return examineeIDNumber;
+        }
     }
 
     static class ExamineeExamInfo {
