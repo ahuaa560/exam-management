@@ -49,4 +49,15 @@ public interface ExamCenterMapper {
     @Select("SELECT * FROM exam_center WHERE region_id = #{regionId}")
     List<ExamCenter> getExamCentersByRegionId(String regionId);
 
+    @Select("SELECT region_id FROM exam_center WHERE exam_center_id=#{examCenterId} ")
+    String getRegionIdByExamCenterId(String examCenterId);
+
+    @Results({
+            @Result(property = "examCenterId", column = "exam_center_id"),
+            @Result(property = "examCenterName", column = "exam_center_name"),
+            @Result(property = "regionId", column = "region_id"),
+            @Result(property = "examCenterLocation", column = "exam_center_location")
+    })
+    @Select("SELECT * FROM exam_center WHERE exam_center_id=#{examCenterId} ")
+    ExamCenter getExamCenterByExamCenterId(String examCenterId);
 }

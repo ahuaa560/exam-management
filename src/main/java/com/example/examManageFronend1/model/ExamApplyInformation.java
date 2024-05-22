@@ -4,11 +4,7 @@ public class ExamApplyInformation {
     String examId;//考试ID
     int user_id;//用户ID
     //考试类型
-    public enum examForm{
-        ziKao,
-        tongKao
-
-    }
+    ExamForm examForm;
     boolean paymentStatu;//支付情况
     String examCenterId; //考点ID
     String examExamineeNumber;
@@ -23,7 +19,8 @@ public class ExamApplyInformation {
     public void setExamCenterId(String examCenterId) { this.examCenterId = examCenterId; }
     public void setPaymentStatu(boolean paymentStatu) { this.paymentStatu = paymentStatu; }
     public void setExamExamineeNumber(String examExamineeNumber) { this.examExamineeNumber = examExamineeNumber; }
-    public void setExamForm(examForm examForm) { examForm = examForm; }
+    public void setExamForm(ExamForm examForm) { this.examForm = examForm; }
+    public ExamForm getExamForm(){return this.examForm;}
     @Override
     public String toString() {
         return "ExamApplyInformation [examId=" + examId + ", user_id=" + user_id

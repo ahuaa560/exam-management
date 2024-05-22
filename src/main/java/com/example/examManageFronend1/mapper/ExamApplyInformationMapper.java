@@ -18,8 +18,8 @@ public interface ExamApplyInformationMapper {
     @Select("SELECT * FROM exam_apply_information WHERE user_id = #{userId}")
     List<ExamApplyInformation> getExamApplyInformationByUserId(String userId);
 
-    @Insert("insert into exam_apply_information(exam_id,user_id,exam_form,payment_status,exam_center_id,exam_examinee_num)"+
-            "VALUES (#{examId},#{user_id} ,#{examForm},#{paymentStatu} ,#{examExamineeNumber} )")
+    @Insert("insert into exam_apply_information(exam_id,user_id,exam_form,payment_status,exam_center_id,exam_examinee_number)"+
+            "VALUES (#{examId},#{user_id} ,#{examForm},#{paymentStatu} ,#{examCenterId} ,#{examExamineeNumber} )")
     public void InsertExamApplyInformation(ExamApplyInformation examApplyInformation);
 }
 

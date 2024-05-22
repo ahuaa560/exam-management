@@ -2,10 +2,12 @@ package com.example.examManageFronend1.controller;
 
 import com.example.examManageFronend1.mapper.ExamMapper;
 import com.example.examManageFronend1.model.Exam;
+import com.example.examManageFronend1.model.ExamCenter;
 import com.example.examManageFronend1.model.Examinee;
+import com.example.examManageFronend1.model.Region;
 import com.example.examManageFronend1.service.ApplyService;
+import com.example.examManageFronend1.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -19,6 +21,8 @@ public class ApplyController {
     private ApplyService applyService;
 
     private final ExamMapper examMapper;
+    @Autowired
+    private RegionService regionService;
 
     @Autowired
     public ApplyController(ExamMapper examMapper) {
@@ -64,13 +68,28 @@ public class ApplyController {
     }
 
     @PostMapping("/exam")
-    ResponseEntity<?> addExamExaminee(@RequestParam("examId") String examId,@RequestParam("userId") String userId,@RequestParam("centerId") String examCenterId) {
-        try{
+    public Map<String,Object> addExamExaminee(@RequestParam("examId") String examId,@RequestParam("userId") String userId,@RequestParam("centerId") String examCenterId) {
+        Map<String,Object>response = new HashMap<>();
+
             applyService.addExamExaminee(examId,userId,examCenterId);
-            return ResponseEntity.ok("success");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+            Exam exam = applyService.getExamByExamId(examId);
+            ExamCenter examCenter=applyService.getExamCenterByExamCenterId(examCenterId);
+            String regionId=applyService.getRegionIdByExamCenterId(examCenterId);
+            Region region=applyService.getRegionByRegionId(regionId);
+
+            response.put("examId", examId);
+            response.put("examCenterId", examCenterId);
+            response.put("userId", userId);
+            response.put("examName", exam.getExamName());
+            response.put("startExamTime", exam.getStartExamTime());
+            response.put("endExamTime", exam.getEndExamTime());
+            response.put("examPayment", exam.getExamPayment());
+            response.put("cityName", region.getCityName());
+            response.put("districtName",region.getDistrictsName());
+            response.put("centerName",examCenter.getExamCenterName());
+
+            return response;
+
 
     }
 

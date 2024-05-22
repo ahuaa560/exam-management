@@ -113,4 +113,16 @@ public class ApplyService {
           examApplyInformationMapper.InsertExamApplyInformation(examApplyInformation);
 
     }
+
+    public String getRegionIdByExamCenterId(String examCenterId) {
+        return examCenterMapper.getRegionIdByExamCenterId(examCenterId);
+    }
+
+    public Region getRegionByRegionId(String regionId) {
+        return regionMapper.getRegionById(regionId);
+    }
+
+    public ExamCenter getExamCenterByExamCenterId(String examCenterId) {
+        return examCenterMapper.getExamCenterByExamCenterId(examCenterId);
+    }
 }

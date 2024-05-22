@@ -1,7 +1,7 @@
 package com.example.examManageFronend1.mapper;
 
 import com.example.examManageFronend1.model.Exam;
-import com.example.examManageFronend1.model.ExamApplyInformation;
+import com.example.examManageFronend1.model.ExamForm;
 import com.example.examManageFronend1.model.User;
 import org.apache.ibatis.annotations.*;
 
@@ -49,5 +49,5 @@ public interface ExamMapper {
     Exam getExamByExamId(String examId);
 
     @Select("SELECT exam_form FROM exam_apply_information WHERE exam_id =#{examId} ")
-    ExamApplyInformation.examForm getExamFormByExamId(String examId);
+    ExamForm getExamFormByExamId(String examId);
 }
