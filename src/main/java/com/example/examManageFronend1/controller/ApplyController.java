@@ -5,10 +5,8 @@ import com.example.examManageFronend1.model.Exam;
 import com.example.examManageFronend1.model.Examinee;
 import com.example.examManageFronend1.service.ApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +41,7 @@ public class ApplyController {
         response.put("endApplyTime", exam.getEndApplyTime());
         response.put("examPayment", exam.getExamPayment());
         response.put("cityNames", cityNames);
+        response.put("examId", exam.getExamId());
 
 
         return response;
@@ -61,6 +60,17 @@ public class ApplyController {
     public int getRemainNumberByExamIdAndCenterId(@RequestParam("examId") String examId, @RequestParam("centerId") String examCenterId) {
 
         return applyService.getRemainNumberByExamIdAndCenterId(examId, examCenterId);
+
+    }
+
+    @PostMapping("/exam")
+    ResponseEntity<?> addExamExaminee(@RequestParam("examId") String examId,@RequestParam("userId") String userId,@RequestParam("centerId") String examCenterId) {
+        try{
+            applyService.addExamExaminee(examId,userId,examCenterId);
+            return ResponseEntity.ok("success");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
     }
 

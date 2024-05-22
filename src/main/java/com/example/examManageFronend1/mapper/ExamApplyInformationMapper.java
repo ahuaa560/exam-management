@@ -1,10 +1,7 @@
 package com.example.examManageFronend1.mapper;
 
 import com.example.examManageFronend1.model.ExamApplyInformation;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,5 +17,9 @@ public interface ExamApplyInformationMapper {
     })
     @Select("SELECT * FROM exam_apply_information WHERE user_id = #{userId}")
     List<ExamApplyInformation> getExamApplyInformationByUserId(String userId);
+
+    @Insert("insert into exam_apply_information(exam_id,user_id,exam_form,payment_status,exam_center_id,exam_examinee_num)"+
+            "VALUES (#{examId},#{user_id} ,#{examForm},#{paymentStatu} ,#{examExamineeNumber} )")
+    public void InsertExamApplyInformation(ExamApplyInformation examApplyInformation);
 }
 

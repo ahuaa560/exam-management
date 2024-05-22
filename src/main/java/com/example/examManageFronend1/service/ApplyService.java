@@ -24,12 +24,15 @@ public class ApplyService {
     @Autowired
     private ExamCenterMapper examCenterMapper;
 
-    public ApplyService(ExamineeMapper examineeMapper,ExamMapper examMapper,ExamInformationMapper examInformationMapper,RegionMapper regionMapper,ExamCenterMapper examCenterMapper) {
+    private ExamApplyInformationMapper examApplyInformationMapper;
+
+    public ApplyService(ExamineeMapper examineeMapper,ExamMapper examMapper,ExamInformationMapper examInformationMapper,RegionMapper regionMapper,ExamCenterMapper examCenterMapper,ExamApplyInformationMapper examApplyInformationMapper) {
         this.examineeMapper = examineeMapper;
         this.examMapper = examMapper;
         this.examInformationMapper = examInformationMapper;
         this.regionMapper = regionMapper;
         this.examCenterMapper = examCenterMapper;
+        this.examApplyInformationMapper = examApplyInformationMapper;
     }
 
     public Examinee getExamineeByUserId(String userId) {
@@ -96,5 +99,18 @@ public class ApplyService {
 
     public int getRemainNumberByExamIdAndCenterId(String examId, String examCenterId) {
         return examInformationMapper.getRemainNumberByExamIdAndCenterId( examId,examCenterId);
+    }
+
+    public void addExamExaminee(String examId, String userId, String examCenterId) {
+          ExamApplyInformation examApplyInformation = new ExamApplyInformation();
+
+          examApplyInformation.setExamId(examId);
+          examApplyInformation.setUser_id(Integer.parseInt(userId));
+          examApplyInformation.setExamCenterId(examCenterId);
+          examApplyInformation.setPaymentStatu(false);
+          examApplyInformation.setExamForm(examMapper.getExamFormByExamId(examId));
+
+          examApplyInformationMapper.InsertExamApplyInformation(examApplyInformation);
+
     }
 }

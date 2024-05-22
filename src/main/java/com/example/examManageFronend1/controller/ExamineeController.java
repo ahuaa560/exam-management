@@ -69,7 +69,7 @@ public class ExamineeController {
         List<Exam> exams = examineeService.getActiveExams();
         List<ExamApplyInformation> examApplyInfos = examineeService.getExamApplyInformationByUserId(userId);
 
-        UserInfo userInfo = new UserInfo(examineeName, "individual");
+        UserInfo userInfo = new UserInfo(examineeName, examinee.getUserId(),"individual");
 
         List<ExamInfo> examInfoList = exams.stream().map(exam -> {
             ExamInfo examInfo = new ExamInfo();
@@ -215,10 +215,12 @@ public class ExamineeController {
 
     static class UserInfo {
         private String name;
+        private String userId;
         private String user_type;
 
-        public UserInfo(String name, String user_type) {
+        public UserInfo(String name, String userId,String user_type) {
             this.name = name;
+            this.userId = userId;
             this.user_type = user_type;
         }
         public String getName() {
@@ -232,6 +234,12 @@ public class ExamineeController {
         }
         public void setUser_type(String user_type) {
             this.user_type = user_type;
+        }
+        public String getUser_id() {
+            return userId;
+        }
+        public void setUser_id(String user_id) {
+            this.userId = user_id;
         }
     }
 

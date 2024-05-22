@@ -4,7 +4,7 @@ public class ExamApplyInformation {
     String examId;//考试ID
     int user_id;//用户ID
     //考试类型
-    enum examForm{
+    public enum examForm{
         ziKao,
         tongKao
 
