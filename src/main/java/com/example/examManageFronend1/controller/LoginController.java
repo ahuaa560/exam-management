@@ -73,7 +73,8 @@ public class LoginController {
                 Map<String, Object> responseBody = new HashMap<>();
                 responseBody.put("success", true);
                 responseBody.put("message", "Login successful!");
-                responseBody.put("organizationId", organization.getOrganizationNumber());
+                responseBody.put("userId", user.getUserId());
+                responseBody.put("organizationNumber", organization.getOrganizationNumber());
                 responseBody.put("userId", organization.getOrganizationName());
                 return ResponseEntity.ok(responseBody);
                 //return ResponseEntity.ok("Login successful,机构id:" + organization.getOrganizationNumber() + ",机构名称:" + organization.getOrganizationName());

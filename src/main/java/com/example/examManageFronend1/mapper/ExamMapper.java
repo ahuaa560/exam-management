@@ -33,4 +33,17 @@ public interface ExamMapper {
     })
     @Select("SELECT * FROM exam WHERE start_apply_time <= NOW() AND end_apply_time >= NOW()")
     List<Exam> getActiveExams();
+
+    @Results({
+            @Result(property ="examId",column = "exam_id"),
+            @Result(property ="examForm",column = "exam_form"),
+            @Result(property ="startApplyTime",column = "start_apply_time"),
+            @Result(property ="startExamTime",column = "start_exam_time"),
+            @Result(property ="endExamTime",column = "end_exam_time"),
+            @Result(property ="endApplyTime",column = "end_apply_time"),
+            @Result(property ="examPayment",column = "exam_payment"),
+            @Result(property ="examName",column = "exam_name")
+    })
+    @Select("SELECT * FROM Exam WHERE examId = #{examId}")
+    Exam getExamById(String examId);
 }

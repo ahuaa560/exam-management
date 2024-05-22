@@ -68,6 +68,8 @@ public class ExamineeController {
         List<Exam> exams = examineeService.getActiveExams();
         List<ExamApplyInformation> examApplyInfos = examineeService.getExamApplyInformationByUserId(userId);
 
+        userInfo userInfo=new userInfo(examinee.getExamineeName(),"individual");
+
         List<ExamInfo> examInfoList = exams.stream().map(exam -> {
             ExamInfo examInfo = new ExamInfo();
             examInfo.setExamId(exam.getExamId());
@@ -82,17 +84,17 @@ public class ExamineeController {
                     .orElse(null);
 
             if (applyInfo == null) {
-                examInfo.setStatus("未报考");
+                examInfo.setStatus("not_selected");
             } else if (applyInfo.isPaymentStatu()) {
-                examInfo.setStatus("已缴费");
+                examInfo.setStatus("selected");
             } else {
-                examInfo.setStatus("未缴费");
+                examInfo.setStatus("completed");
             }
 
             return examInfo;
         }).collect(Collectors.toList());
 
-        return new ExamineeExamInfo(examinee.getExamineeName(), examInfoList);
+        return new ExamineeExamInfo(userInfo, examInfoList);
     }
 
     static class ExamineeInfo{
@@ -123,22 +125,16 @@ public class ExamineeController {
     }
 
     static class ExamineeExamInfo {
-        private String examineeName;
+        private userInfo userInfoList;
         private List<ExamInfo> examInfoList;
 
         // Constructors, getters, setters
-        public ExamineeExamInfo(String examineeName, List<ExamInfo> examInfoList) {
-            this.examineeName = examineeName;
+        public ExamineeExamInfo(userInfo userInfoList, List<ExamInfo> examInfoList) {
+            this.userInfoList=userInfoList;
             this.examInfoList = examInfoList;
         }
 
-        public String getExamineeName() {
-            return examineeName;
-        }
 
-        public void setExamineeName(String examineeName) {
-            this.examineeName = examineeName;
-        }
 
         public List<ExamInfo> getExamInfoList() {
             return examInfoList;
@@ -204,6 +200,28 @@ public class ExamineeController {
 
         public void setStatus(String status) {
             this.status = status;
+        }
+    }
+
+    static class userInfo{
+        private String name;
+        private String user_type;
+
+        public userInfo(String name,String user_type) {
+            this.name = name;
+            this.user_type = user_type;
+        }
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public String getUser_type() {
+            return user_type;
+        }
+        public void setUser_type(String user_type) {
+            this.user_type = user_type;
         }
     }
 
