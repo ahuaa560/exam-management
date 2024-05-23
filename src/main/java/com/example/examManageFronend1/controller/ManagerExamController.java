@@ -25,8 +25,8 @@ public class ManagerExamController {
 
     @PostMapping("/update")
     public void updateApplyTime(@RequestBody Map<String, String> request){
-        String examId = request.get("exam_id");
-        String timeString = request.get("time");  // 获取时间字符串
+        String examId = request.get("examId");
+        String timeString = request.get("endApplyTime");  // 获取时间字符串
         System.out.println(timeString);
         System.out.println(examId);
         if (timeString != null) {
