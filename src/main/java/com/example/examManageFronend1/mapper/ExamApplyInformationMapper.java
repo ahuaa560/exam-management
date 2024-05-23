@@ -2,6 +2,7 @@ package com.example.examManageFronend1.mapper;
 
 import com.example.examManageFronend1.model.ExamApplyInformation;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
 
@@ -41,13 +42,13 @@ public interface ExamApplyInformationMapper {
 
     @Results({
             @Result(property = "examId",column = "exam_id"),
-            @Result(property = "user_id",column = "user_id"),
+            @Result(property = "user_id",column = "user_id",jdbcType = JdbcType.VARCHAR),
             @Result(property = "examForm",column = "exam_form"),
-            @Result(property = "paymentStatu",column = "payment_status"),
+            @Result(property = "paymentStatu",column = "payment_status",jdbcType = JdbcType.TINYINT),
             @Result(property = "examCenterId",column = "exam_center_id"),
             @Result(property = "examExamineeNumber",column = "exam_examinee_number")
     })
-    @Select("SELECT * FROM exam_apply_information WHERE user_id = #{userId} AND exam_id=#{examId}")
-    ExamApplyInformation getExamApplyInformationByUserIdAndExamId(String userId, String examId);
+    @Select("SELECT * FROM exam_apply_information WHERE user_id = #{user_id} AND exam_id=#{examId}")
+    ExamApplyInformation getExamApplyInformationByUserIdAndExamId(String user_id, String examId);
 }
 

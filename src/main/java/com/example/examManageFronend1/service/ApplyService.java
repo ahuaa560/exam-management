@@ -148,8 +148,10 @@ public class ApplyService {
         return examApplyInformationMapper.findByExamExamineeNumber(examNumber) != null;
     }
 
-    public ExamApplyInformation getEaxmApplyInformationByUserIdAndExamId(String userId, String examId) {
+    public ExamApplyInformation getExamApplyInformationByUserIdAndExamId(String userId, String examId) {
+
         return examApplyInformationMapper.getExamApplyInformationByUserIdAndExamId(userId,examId);
+
     }
 
     public void addExamineeNecessary(String examExamineeNum, String examineeDemand) {

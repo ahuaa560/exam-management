@@ -71,14 +71,16 @@ public class ApplyController {
     public Map<String,Object> addExamExaminee(@RequestParam("examId") String examId,@RequestParam("userId") String userId,@RequestParam("centerId") String examCenterId) {
         Map<String,Object>response = new HashMap<>();
 
-            if(applyService.getEaxmApplyInformationByUserIdAndExamId(userId,examId)!=null)
+            if(applyService.getExamApplyInformationByUserIdAndExamId(userId,examId)!=null)
             {
                 response.put("success",false);
                 response.put("error","考生已报名该考试");
-                return response;
+                //return response;
             }
-            applyService.addExamExaminee(examId,userId,examCenterId);
-            applyService.updateExamRemainNumber(examId,examCenterId,-1);
+            else {
+                applyService.addExamExaminee(examId,userId,examCenterId);
+                applyService.updateExamRemainNumber(examId,examCenterId,-1);
+            }
 
 
             Exam exam = applyService.getExamByExamId(examId);
@@ -138,10 +140,13 @@ public class ApplyController {
     Map<String,Object> getInfoBeforeNeccessaryExam(@RequestParam("examId") String examId,@RequestParam("userId") String userId) {
         Map<String,Object>response = new HashMap<>();
 
-        ExamApplyInformation examApplyInformation =applyService.getEaxmApplyInformationByUserIdAndExamId(userId,examId);
+        ExamApplyInformation examApplyInformation =applyService.getExamApplyInformationByUserIdAndExamId(userId,examId);
+        System.out.println(examApplyInformation);
         Exam exam=applyService.getExamByExamId(examId);
         ExamCenter examCenter=applyService.getExamCenterByExamCenterId(examApplyInformation.getExamCenterId());
         Region region=applyService.getRegionByRegionId(examCenter.getRegionId());
+
+
 
 
         Map<String,Object>examMap=new HashMap<>();

@@ -71,4 +71,15 @@ public interface ExamineeMapper {
     @Select("SELECT * FROM examinee WHERE examinee_ID_number = #{idNumber} OR examinee_email = #{email} OR examinee_phone = #{phone}")
     Examinee findByIdNumberOrEmailOrPhone(String idNumber, String email, String phone);
 
+    @Results({
+            @Result(property = "userId",column ="user_id" ,jdbcType = JdbcType.INTEGER),
+            @Result(property ="whiteListed",column = "white_listed",jdbcType = JdbcType.TINYINT),
+            @Result(property ="examineeName",column = "examinee_name"),
+            @Result(property ="examineeIDNumber",column = "examinee_ID_number"),
+            @Result(property ="examineePhone",column = "examinee_phone"),
+            @Result(property ="examineeEmail",column = "examinee_email"),
+            @Result(property ="organizationName",column = "organization_name")
+    })
+    @Select("SELECT * FROM examinee WHERE organization_name=#{organizationName} ")
+    List<Examinee> getExamineesByOrganizationName(String organizationName);
 }

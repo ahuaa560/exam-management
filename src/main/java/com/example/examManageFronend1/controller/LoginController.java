@@ -75,7 +75,7 @@ public class LoginController {
                 responseBody.put("message", "Login successful!");
                 responseBody.put("userId", user.getUserId());
                 responseBody.put("organizationNumber", organization.getOrganizationNumber());
-                responseBody.put("userId", organization.getOrganizationName());
+                responseBody.put("organizationName", organization.getOrganizationName());
                 return ResponseEntity.ok(responseBody);
                 //return ResponseEntity.ok("Login successful,机构id:" + organization.getOrganizationNumber() + ",机构名称:" + organization.getOrganizationName());
             } else {
