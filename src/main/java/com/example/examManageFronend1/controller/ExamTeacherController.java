@@ -2,7 +2,7 @@ package com.example.examManageFronend1.controller;
 
 
 import com.example.examManageFronend1.model.ExamTeacher;
-import com.example.examManageFronend1.service.ManagerService.ExamTeacherService;
+import com.example.examManageFronend1.service.ExamTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

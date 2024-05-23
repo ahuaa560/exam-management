@@ -18,7 +18,7 @@ public class ExamService {
 
     public int addExam(Exam exam) { return this.examMapper.insert(exam); }
 
-    public User getExamById (String id){
+    public Exam getExamById (String id){
         return examMapper.findById(id);
     }
 
@@ -38,4 +38,6 @@ public class ExamService {
     public void deleteUser(String id) {
         examMapper.deleteById(id);
     }
+
+
 }
