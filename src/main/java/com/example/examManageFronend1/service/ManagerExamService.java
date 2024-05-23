@@ -21,7 +21,9 @@ public class ManagerExamService {
         return examMapper.findAll();
     }
 
-
+    public void updateExam(String id , LocalDateTime time){
+        examMapper.updateEndApplyTimeToNewTime(id, time);
+    }
 
     public void createExam(Exam exam){
         examMapper.insert(exam);

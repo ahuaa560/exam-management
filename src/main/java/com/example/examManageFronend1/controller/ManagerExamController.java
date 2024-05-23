@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/manage")
 public class ManagerExamController {
     @Autowired
@@ -32,6 +32,7 @@ public class ManagerExamController {
         if (timeString != null) {
             LocalDateTime time = LocalDateTime.parse(timeString, DateTimeFormatter.ISO_DATE_TIME);
             System.out.println(time);
+            managerExamService.updateExam(examId, time);
         } else {
             // 处理时间字符串为空的情况，可以返回错误信息或进行其他处理
         }
