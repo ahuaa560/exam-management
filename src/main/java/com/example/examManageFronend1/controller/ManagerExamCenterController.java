@@ -19,5 +19,14 @@ public class ManagerExamCenterController {
         return managerExamCenterService.getExamCenter();
     }
 
+    @PostMapping("/update")
+    public void updateManagerExamCenter(@RequestBody ManagerExamCenter managerExamCenter) {
+        managerExamCenterService.updateExamCenter(managerExamCenter);
+    }
+
+    @PostMapping("/{id}")
+    public ManagerExamCenter getManagerExamCenter(@PathVariable String id) {
+        return managerExamCenterService.getExamCenterById(id);
+    }
 
 }

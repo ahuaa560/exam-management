@@ -26,9 +26,15 @@ public interface ManagerExamCenterMapper {
             "VALUES (#{examCenterId}, #{examCenterName}, #{regionId}, #{examCenterLocation}, #{examRemainNumber})")
     void manageAddExamCenter(ManagerExamCenter managerExamCenter);
 
-    @Update("UPDATE exam_center SET exam_center_name = #{examCenterName}, region_id = #{regionId}, " +
-            "exam_center_location = #{examCenterLocation}, exam_remain_number = #{examRemainNumber} WHERE exam_center_id = #{examCenterId}")
-    void manageUpdateExamCenter(ManagerExamCenter managerExamCenter);
+    @Update("UPDATE exam_center ec " +
+            "JOIN region r ON ec.region_id = r.region_id " +
+            "JOIN exam_information ei ON ec.exam_center_id = ei.exam_center_id " +
+            "SET ec.exam_center_name = #{examCenter.examCenterName}, " +
+            "r.city_name = #{examCenter.cityName}, " +
+            "ei.exam_remain_number = #{examCenter.examRemainNumber} " +
+            "WHERE ec.exam_center_id = #{examCenter.examCenterId}")
+    void manageUpdateExamCenter(@Param("examCenter") ManagerExamCenter examCenter);
+
 
     @Delete("DELETE FROM exam_center WHERE exam_center_id = #{examCenterId}")
     void manageDeleteExamCenter(@Param("examCenterId") String examCenterId);

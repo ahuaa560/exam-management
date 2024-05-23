@@ -25,7 +25,7 @@ public class ManagerExamCenterService {
         managerExamCenterMapper.manageUpdateExamCenter(examCenter);
     }
 
-    public void deleteExamCenter(String examCenterId) {
-        managerExamCenterMapper.manageDeleteExamCenter(examCenterId);
+    public ManagerExamCenter getExamCenterById(String  id) {
+        return  managerExamCenterMapper.manageGetExamCenterById(id);
     }
 }
