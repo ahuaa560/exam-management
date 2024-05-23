@@ -56,7 +56,7 @@ public class ExamineeService {
 
 
     public Examinee getExamineeByUserId(String userId) {
-        return examineeMapper.getExamineeByUserId(userId);
+        return examineeMapper.getExamineeByUserId(Integer.parseInt(userId));
     }
 
     public void updateExaminee(Examinee examinee) {

@@ -3,7 +3,6 @@ package com.example.examManageFronend1.controller;
 import com.example.examManageFronend1.model.Exam;
 import com.example.examManageFronend1.service.ManagerExamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -11,7 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+
+@RestController
 @RequestMapping("/manage")
 public class ManagerExamController {
     @Autowired
