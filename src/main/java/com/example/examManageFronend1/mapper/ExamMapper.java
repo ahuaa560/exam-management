@@ -2,8 +2,10 @@ package com.example.examManageFronend1.mapper;
 
 import com.example.examManageFronend1.model.Exam;
 import com.example.examManageFronend1.model.ExamForm;
+import com.example.examManageFronend1.model.User;
 import org.apache.ibatis.annotations.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -68,8 +70,19 @@ public interface ExamMapper {
     @Select("SELECT * FROM exam WHERE exam_id = #{examId}")
     Exam getExamByExamId(String examId);
 
-    @Select("SELECT exam_form FROM exam WHERE exam_id =#{examId} ")
+    @Select("SELECT exam_form FROM exam_apply_information WHERE exam_id =#{examId} ")
     ExamForm getExamFormByExamId(String examId);
 
-
+    @Results({
+            @Result(property ="examId",column = "exam_id"),
+            @Result(property ="examForm",column = "exam_form"),
+            @Result(property ="startApplyTime",column = "start_apply_time"),
+            @Result(property ="startExamTime",column = "start_exam_time"),
+            @Result(property ="endExamTime",column = "end_exam_time"),
+            @Result(property ="endApplyTime",column = "end_apply_time"),
+            @Result(property ="examPayment",column = "exam_payment"),
+            @Result(property ="examName",column = "exam_name")
+    })
+    @Update("UPDATE exam SET end_apply_time = #{newEndTime} WHERE exam_id = #{examId}")
+    void updateEndApplyTimeToNewTime(@Param("examId") String examId, @Param("newEndTime") LocalDateTime newEndTime);
 }
