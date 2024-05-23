@@ -22,6 +22,7 @@ public class ApplyController {
     @Autowired
     private RegionService regionService;
 
+
     @Autowired
     public ApplyController(ExamMapper examMapper) {
         this.examMapper = examMapper;
@@ -162,6 +163,20 @@ public class ApplyController {
         response.put("examCenter",examCenterMap);
 
         return response;
+    }
+
+    @PostMapping("necessary/add")
+    Map<String,Object> addExamineeNecessary(@RequestParam("examExamineeNum") String examExamineeNum,@RequestParam("demand")String examineeDemand){
+        Map<String,Object>response = new HashMap<>();
+        try{
+            applyService.addExamineeNecessary(examExamineeNum,examineeDemand);
+            response.put("success",true);
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+            response.put("error",e.getMessage());
+            return response;
+        }
     }
 
 

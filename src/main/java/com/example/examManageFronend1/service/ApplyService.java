@@ -27,13 +27,16 @@ public class ApplyService {
 
     private ExamApplyInformationMapper examApplyInformationMapper;
 
-    public ApplyService(ExamineeMapper examineeMapper,ExamMapper examMapper,ExamInformationMapper examInformationMapper,RegionMapper regionMapper,ExamCenterMapper examCenterMapper,ExamApplyInformationMapper examApplyInformationMapper) {
+    private ExamineeNecessaryMapper examineeNecessaryMapper;
+
+    public ApplyService(ExamineeMapper examineeMapper,ExamMapper examMapper,ExamInformationMapper examInformationMapper,RegionMapper regionMapper,ExamCenterMapper examCenterMapper,ExamApplyInformationMapper examApplyInformationMapper,ExamineeNecessaryMapper examineeNecessaryMapper) {
         this.examineeMapper = examineeMapper;
         this.examMapper = examMapper;
         this.examInformationMapper = examInformationMapper;
         this.regionMapper = regionMapper;
         this.examCenterMapper = examCenterMapper;
         this.examApplyInformationMapper = examApplyInformationMapper;
+        this.examineeNecessaryMapper = examineeNecessaryMapper;
     }
 
     public Examinee getExamineeByUserId(String userId) {
@@ -147,5 +150,9 @@ public class ApplyService {
 
     public ExamApplyInformation getEaxmApplyInformationByUserIdAndExamId(String userId, String examId) {
         return examApplyInformationMapper.getExamApplyInformationByUserIdAndExamId(userId,examId);
+    }
+
+    public void addExamineeNecessary(String examExamineeNum, String examineeDemand) {
+            examineeNecessaryMapper.addNecessary(examExamineeNum,examineeDemand,false);
     }
 }
