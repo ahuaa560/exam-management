@@ -4,12 +4,15 @@ import com.example.examManageFronend1.model.Exam;
 import com.example.examManageFronend1.model.ExamApplyInformation;
 import com.example.examManageFronend1.model.Examinee;
 import com.example.examManageFronend1.service.ExamineeService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -48,6 +51,21 @@ public class ExamineeController {
     @GetMapping("/{userId}")
     public Examinee getExamineeByUserId(@PathVariable String userId) {
         return examineeService.getExamineeByUserId(userId);
+    }
+
+    @GetMapping("/info")
+    public Map<String,Object> getExamineeInfoByUserId(@Param("userId") String userId){
+        Examinee examinee=examineeService.getExamineeByUserId(userId);
+        Map<String,Object> response=new HashMap<>();
+        Map<String,Object> examineeInfo=new HashMap<>();
+
+        examineeInfo.put("name",examinee.getExamineeName());
+        examineeInfo.put("IDNumber",examinee.getExamineeIDNumber());
+        examineeInfo.put("email",examinee.getExamineeEmail());
+        examineeInfo.put("phone",examinee.getExamineePhone());
+        examineeInfo.put("userId",examinee.getUserId());
+        response.put("examinee",examineeInfo);
+        return response;
     }
 
 

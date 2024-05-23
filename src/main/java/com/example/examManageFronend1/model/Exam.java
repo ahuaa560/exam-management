@@ -79,11 +79,6 @@ public class Exam {
     private String examName; // 考试名称
     private ExamForm examForm; // 考试类型
 
-    // 考试类型枚举
-    public enum ExamForm {
-        SHENGKAO, // 省考
-        TONGKAO // 统考
-    }
 
     @Override
     public String toString() {

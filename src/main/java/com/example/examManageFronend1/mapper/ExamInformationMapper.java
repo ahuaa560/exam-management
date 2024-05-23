@@ -2,10 +2,7 @@ package com.example.examManageFronend1.mapper;
 
 import com.example.examManageFronend1.model.ExamInformation;
 import com.example.examManageFronend1.typehandler.ExamTeacherTypeHandler;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -41,4 +38,7 @@ public interface ExamInformationMapper {
 
     @Select("SELECT exam_remain_number  FROM exam_information WHERE exam_id=#{examId} AND exam_center_id=#{centerId}")
     int getRemainNumberByExamIdAndCenterId(String examId,String centerId);
+
+    @Update("UPDATE exam_information SET exam_remain_number=exam_remain_number+#{i} WHERE exam_id=#{examId} AND exam_center_id=#{examCenterId}")
+    void updateExamemainNumber(String examId, String examCenterId, int i);
 }

@@ -1,12 +1,10 @@
 package com.example.examManageFronend1.controller;
 
 import com.example.examManageFronend1.mapper.ExamMapper;
-import com.example.examManageFronend1.model.Exam;
-import com.example.examManageFronend1.model.ExamCenter;
-import com.example.examManageFronend1.model.Examinee;
-import com.example.examManageFronend1.model.Region;
+import com.example.examManageFronend1.model.*;
 import com.example.examManageFronend1.service.ApplyService;
 import com.example.examManageFronend1.service.RegionService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +22,7 @@ public class ApplyController {
     @Autowired
     private RegionService regionService;
 
+
     @Autowired
     public ApplyController(ExamMapper examMapper) {
         this.examMapper = examMapper;
@@ -34,6 +33,7 @@ public class ApplyController {
         Examinee examinee = applyService.getExamineeByUserId(userId);
         Exam exam = applyService.getExamByExamId(examId);
         List<String> cityNames = applyService.getCityNamesByExamId(examId);
+
 
         Map<String, Object> response = new HashMap<>();
         response.put("examineeName", examinee.getExamineeName());
@@ -71,7 +71,16 @@ public class ApplyController {
     public Map<String,Object> addExamExaminee(@RequestParam("examId") String examId,@RequestParam("userId") String userId,@RequestParam("centerId") String examCenterId) {
         Map<String,Object>response = new HashMap<>();
 
+            if(applyService.getEaxmApplyInformationByUserIdAndExamId(userId,examId)!=null)
+            {
+                response.put("success",false);
+                response.put("error","考生已报名该考试");
+                return response;
+            }
             applyService.addExamExaminee(examId,userId,examCenterId);
+            applyService.updateExamRemainNumber(examId,examCenterId,-1);
+
+
             Exam exam = applyService.getExamByExamId(examId);
             ExamCenter examCenter=applyService.getExamCenterByExamCenterId(examCenterId);
             String regionId=applyService.getRegionIdByExamCenterId(examCenterId);
@@ -87,10 +96,87 @@ public class ApplyController {
             response.put("cityName", region.getCityName());
             response.put("districtName",region.getDistrictsName());
             response.put("centerName",examCenter.getExamCenterName());
+            response.put("centerLocation", examCenter.getExamCenterLocation());
 
             return response;
+    }
+
+    //考生支付
+    @PostMapping("/pay")
+    public Map<String,Object> SetExamApplyPayed(@Param("userId")String userId,@Param("examId")String examId){
+
+        try{
+            applyService.setExamApplyPayed(userId,examId);
+
+            Examinee examinee=applyService.getExamineeByUserId(userId);
+            Map<String,Object>examineeMap=new HashMap<>();
+            examineeMap.put("userId", userId);
+            examineeMap.put("examineeName", examinee.getExamineeName());
+
+            Exam exam=applyService.getExamByExamId(examId);
+            Map<String,Object>examMap=new HashMap<>();
+            examMap.put("examId", exam.getExamId());
+            examMap.put("examName", exam.getExamName());
+            examMap.put("startExamTime", exam.getStartExamTime());
+            examMap.put("endAppllyTime", exam.getEndApplyTime());
+
+            Map<String,Object>response = new HashMap<>();
+            response.put("examinee", examineeMap);
+            response.put("exam", examMap);
+
+            return response;
+        }
+        catch (Exception e){
+            Map<String,Object>response = new HashMap<>();
+            e.printStackTrace();
+            response.put("error",e.getMessage());
+            return response;
+        }
+    }
+
+    @GetMapping("/necessary")
+    Map<String,Object> getInfoBeforeNeccessaryExam(@RequestParam("examId") String examId,@RequestParam("userId") String userId) {
+        Map<String,Object>response = new HashMap<>();
+
+        ExamApplyInformation examApplyInformation =applyService.getEaxmApplyInformationByUserIdAndExamId(userId,examId);
+        Exam exam=applyService.getExamByExamId(examId);
+        ExamCenter examCenter=applyService.getExamCenterByExamCenterId(examApplyInformation.getExamCenterId());
+        Region region=applyService.getRegionByRegionId(examCenter.getRegionId());
 
 
+        Map<String,Object>examMap=new HashMap<>();
+        examMap.put("Id", exam.getExamId());
+        examMap.put("name", exam.getExamName());
+        examMap.put("startExamTime", exam.getStartExamTime());
+        examMap.put("endExamTime", exam.getEndExamTime());
+
+        Map<String,Object>examCenterMap=new HashMap<>();
+        examCenterMap.put("Id", examCenter.getExamCenterId());
+        examCenterMap.put("centerName", examCenter.getExamCenterName());
+        examCenterMap.put("centerLocation",examCenter.getExamCenterLocation());
+        examCenterMap.put("cityName", region.getCityName());
+        examCenterMap.put("districtName", region.getDistrictsName());
+
+        response.put("userId", userId);
+        response.put("examExamineeNumber", examApplyInformation.getExamExamineeNumber());
+        response.put("exam",examMap);
+        response.put("examCenter",examCenterMap);
+
+        return response;
+    }
+
+    @PostMapping("necessary/add")
+    Map<String,Object> addExamineeNecessary(@RequestParam("examExamineeNum") String examExamineeNum,@RequestParam("demand")String examineeDemand){
+        Map<String,Object>response = new HashMap<>();
+        try{
+            applyService.addExamineeNecessary(examExamineeNum,examineeDemand);
+            response.put("success",true);
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+            response.put("error",e.getMessage());
+            return response;
+        }
     }
 
 

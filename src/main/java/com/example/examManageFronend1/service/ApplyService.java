@@ -1,5 +1,6 @@
 package com.example.examManageFronend1.service;
 
+import com.example.examManageFronend1.algorithm.RandomNineDigitNumber;
 import com.example.examManageFronend1.mapper.*;
 import com.example.examManageFronend1.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +27,20 @@ public class ApplyService {
 
     private ExamApplyInformationMapper examApplyInformationMapper;
 
-    public ApplyService(ExamineeMapper examineeMapper,ExamMapper examMapper,ExamInformationMapper examInformationMapper,RegionMapper regionMapper,ExamCenterMapper examCenterMapper,ExamApplyInformationMapper examApplyInformationMapper) {
+    private ExamineeNecessaryMapper examineeNecessaryMapper;
+
+    public ApplyService(ExamineeMapper examineeMapper,ExamMapper examMapper,ExamInformationMapper examInformationMapper,RegionMapper regionMapper,ExamCenterMapper examCenterMapper,ExamApplyInformationMapper examApplyInformationMapper,ExamineeNecessaryMapper examineeNecessaryMapper) {
         this.examineeMapper = examineeMapper;
         this.examMapper = examMapper;
         this.examInformationMapper = examInformationMapper;
         this.regionMapper = regionMapper;
         this.examCenterMapper = examCenterMapper;
         this.examApplyInformationMapper = examApplyInformationMapper;
+        this.examineeNecessaryMapper = examineeNecessaryMapper;
     }
 
     public Examinee getExamineeByUserId(String userId) {
-        return examineeMapper.getExamineeByUserId(userId);
+        return examineeMapper.getExamineeByUserId(Integer.parseInt(userId));
     }
 
     public Exam getExamByExamId(String examId) {
@@ -109,6 +113,11 @@ public class ApplyService {
           examApplyInformation.setExamCenterId(examCenterId);
           examApplyInformation.setPaymentStatu(false);
           examApplyInformation.setExamForm(examMapper.getExamFormByExamId(examId));
+          String number;
+          do{
+            number=RandomNineDigitNumber.generateRandomNineDigitNumber();
+          }while (isExamExamineeNumberExists(number));
+          examApplyInformation.setExamExamineeNumber(number);
 
           examApplyInformationMapper.InsertExamApplyInformation(examApplyInformation);
 
@@ -124,5 +133,26 @@ public class ApplyService {
 
     public ExamCenter getExamCenterByExamCenterId(String examCenterId) {
         return examCenterMapper.getExamCenterByExamCenterId(examCenterId);
+    }
+
+    public void setExamApplyPayed(String userId, String examId) {
+        examApplyInformationMapper.setPaymentStatus(userId,examId,true);
+    }
+
+    public void updateExamRemainNumber(String examId, String examCenterId, int i) {
+        examInformationMapper.updateExamemainNumber(examId,examCenterId,i);
+    }
+
+
+    private boolean isExamExamineeNumberExists(String examNumber) {
+        return examApplyInformationMapper.findByExamExamineeNumber(examNumber) != null;
+    }
+
+    public ExamApplyInformation getEaxmApplyInformationByUserIdAndExamId(String userId, String examId) {
+        return examApplyInformationMapper.getExamApplyInformationByUserIdAndExamId(userId,examId);
+    }
+
+    public void addExamineeNecessary(String examExamineeNum, String examineeDemand) {
+            examineeNecessaryMapper.addNecessary(examExamineeNum,examineeDemand,false);
     }
 }

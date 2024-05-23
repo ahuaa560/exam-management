@@ -20,7 +20,7 @@ public class ExamApplyInformation {
     public void setPaymentStatu(boolean paymentStatu) { this.paymentStatu = paymentStatu; }
     public void setExamExamineeNumber(String examExamineeNumber) { this.examExamineeNumber = examExamineeNumber; }
     public void setExamForm(ExamForm examForm) { this.examForm = examForm; }
-    public ExamForm getExamForm(){return this.examForm;}
+    public ExamForm getExamForm(){return examForm;}
     @Override
     public String toString() {
         return "ExamApplyInformation [examId=" + examId + ", user_id=" + user_id
