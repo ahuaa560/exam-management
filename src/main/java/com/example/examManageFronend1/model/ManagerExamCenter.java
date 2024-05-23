@@ -103,4 +103,9 @@ public class ManagerExamCenter {
     LocalDateTime endExamTime;//考试结束时间
     int examRemainNumber;//考点剩余名额
     Map<String, Object> examTeacher;//监考老师
+
+    @Override
+    public String toString() {
+        return "ManagerExamCenter [examCenterId=" + examCenterId + ", examId=" + examId + ", examRemainNumber=" + examRemainNumber + ", examTeacher=" + examTeacher + "]";
+    }
 }
