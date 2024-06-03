@@ -14,7 +14,6 @@ public class ExamTeacherService {
     private ExamTeacherMapper examTeacherMapper;
 
     public List<ExamTeacher> findAllTeachers() {
-        System.out.println(examTeacherMapper.findAllTeachers());
         return examTeacherMapper.findAllTeachers();
     }
 
