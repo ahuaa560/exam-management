@@ -40,6 +40,8 @@ public interface ExamApplyInformationMapper {
     @Update("UPDATE exam_apply_information SET exam_examinee_number=#{number} WHERE user_id=#{userId} AND exam_id=#{examId}")
     void setExamExamineeNumber(String userId, String examId, String number);
 
+
+    @Select("SELECT * FROM exam_apply_information WHERE user_id = #{userId} AND exam_id=#{examId}")
     @Results({
             @Result(property = "examId",column = "exam_id"),
             @Result(property = "user_id",column = "user_id",jdbcType = JdbcType.VARCHAR),
@@ -48,7 +50,6 @@ public interface ExamApplyInformationMapper {
             @Result(property = "examCenterId",column = "exam_center_id"),
             @Result(property = "examExamineeNumber",column = "exam_examinee_number")
     })
-    @Select("SELECT * FROM exam_apply_information WHERE user_id = #{user_id} AND exam_id=#{examId}")
-    ExamApplyInformation getExamApplyInformationByUserIdAndExamId(String user_id, String examId);
+    ExamApplyInformation getExamApplyInformationByUserIdAndExamId(String userId, String examId);
 }
 

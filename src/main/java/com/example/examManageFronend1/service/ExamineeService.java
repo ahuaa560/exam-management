@@ -80,4 +80,7 @@ public class ExamineeService {
     }
 
 
+    public List<Exam> getAllExams() {
+        return examMapper.getAllExams();
+    }
 }

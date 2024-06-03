@@ -84,7 +84,7 @@ public class ExamineeController {
     public ExamineeExamInfo getExamineeExamInfo(@PathVariable String userId) {
         Examinee examinee = examineeService.getExamineeByUserId(userId);
         String examineeName = examinee.getExamineeName();
-        List<Exam> exams = examineeService.getActiveExams();
+        List<Exam> exams = examineeService.getAllExams();
         List<ExamApplyInformation> examApplyInfos = examineeService.getExamApplyInformationByUserId(userId);
 
         UserInfo userInfo = new UserInfo(examineeName, examinee.getUserId(),"individual");
@@ -102,7 +102,10 @@ public class ExamineeController {
                     .findFirst()
                     .orElse(null);
 
-            if (applyInfo == null) {
+            LocalDateTime time = LocalDateTime.now();
+            if (applyInfo == null&&exam.getEndApplyTime().isBefore(time)) {
+                examInfo.setStatus("outdated");
+            } else if (applyInfo==null) {
                 examInfo.setStatus("not_selected");
             } else if (applyInfo.isPaymentStatu()) {
                 examInfo.setStatus("selected");

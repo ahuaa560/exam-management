@@ -94,4 +94,17 @@ public interface ExamMapper {
     })
     @Update("UPDATE exam SET end_apply_time = #{newEndTime} WHERE exam_id = #{examId}")
     void updateEndApplyTimeToNewTime(@Param("examId") String examId, @Param("newEndTime") LocalDateTime newEndTime);
+
+    @Results({
+            @Result(property ="examId",column = "exam_id"),
+            @Result(property ="examForm",column = "exam_form"),
+            @Result(property ="startApplyTime",column = "start_apply_time"),
+            @Result(property ="startExamTime",column = "start_exam_time"),
+            @Result(property ="endExamTime",column = "end_exam_time"),
+            @Result(property ="endApplyTime",column = "end_apply_time"),
+            @Result(property ="examPayment",column = "exam_payment"),
+            @Result(property ="examName",column = "exam_name")
+    })
+    @Select("SELECT * FROM exam")
+    List<Exam> getAllExams();
 }

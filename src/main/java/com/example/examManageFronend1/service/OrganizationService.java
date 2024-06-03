@@ -14,6 +14,6 @@ public class OrganizationService {
     }
 
     public Organization findByUserId(String userId) {
-        return organizationMapper.findByUserId(userId);
+        return organizationMapper.findByUserId(Integer.parseInt(userId));
     }
 }

@@ -26,6 +26,4 @@ public class ExamController {
     public void addExam(@RequestBody Exam exam){ examService.creatExam(exam); }
 
 
-
-
 }

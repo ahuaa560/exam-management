@@ -12,7 +12,7 @@ public interface OrganizationMapper {
             @Result(property = "OrganizationName",column = "organization_name")
     })
     @Select("SELECT * FROM organization WHERE user_id=#{userId} ")
-    Organization findByUserId(String userId);
+    Organization findByUserId(int userId);
 
     @Results({
             @Result(property = "userId",column = "user_id"),

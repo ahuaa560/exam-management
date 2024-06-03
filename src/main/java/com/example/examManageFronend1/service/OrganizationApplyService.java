@@ -26,7 +26,7 @@ public class OrganizationApplyService {
     }
 
     public Organization getOrganizationByUserId(String userId) {
-        return organizationMapper.findByUserId(userId);
+        return organizationMapper.findByUserId(Integer.parseInt(userId));
     }
 
     public List<Exam> getExamInfoList() {

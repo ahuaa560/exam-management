@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface ExamineeMapper {
     @Results({
-            @Result(property = "userId",column ="user_id" ,jdbcType = JdbcType.VARCHAR),
+            @Result(property = "userId",column ="user_id" ,jdbcType = JdbcType.INTEGER),
             @Result(property ="whiteListed",column = "white_listed",jdbcType = JdbcType.TINYINT),
             @Result(property ="examineeName",column = "examinee_name"),
             @Result(property ="examineeIDNumber",column = "examinee_ID_number"),
@@ -38,7 +38,7 @@ public interface ExamineeMapper {
 
 
     @Results({
-            @Result(property = "userId",column ="user_id" ,jdbcType = JdbcType.VARCHAR),
+            @Result(property = "userId",column ="user_id" ,jdbcType = JdbcType.INTEGER),
             @Result(property ="whiteListed",column = "white_listed",jdbcType = JdbcType.TINYINT),
             @Result(property ="examineeName",column = "examinee_name"),
             @Result(property ="examineeIDNumber",column = "examinee_ID_number"),

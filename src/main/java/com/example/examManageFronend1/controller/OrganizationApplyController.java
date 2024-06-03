@@ -54,7 +54,7 @@ public class OrganizationApplyController {
 
         return response;
     }
-
+ 
     @PostMapping("/exam")
     Map<String,Object> getExamineeListAndExamInfoByUserIdAndExamId(@RequestBody EduApplyRequest eduApplyRequest){
         Map<String,Object> response = new HashMap<>();
@@ -88,8 +88,16 @@ public class OrganizationApplyController {
         Exam exam=organizationApplyService.getExamByExamId(examId);
         ExamCenter examCenter=organizationApplyService.getExamCnterByCenterId(examCenterId);
         for(String userId: userIdList){
-            applyService.addExamExaminee(examId,userId,examCenterId);
-           applyService.updateExamRemainNumber(examId,examCenterId,-1);
+            if(applyService.getExamApplyInformationByUserIdAndExamId(userId,examId)!=null)
+            {
+                response.put("success",false);
+                response.put("error","考生"+applyService.getExamineeByUserId(userId).getExamineeName()+"已报名该考试");
+                //return response;
+            }
+            else {
+                applyService.addExamExaminee(examId,userId,examCenterId);
+                applyService.updateExamRemainNumber(examId,examCenterId,-1);
+            }
         }
         response.put("exam",exam);
         response.put("examCenter",examCenter);
@@ -99,6 +107,8 @@ public class OrganizationApplyController {
 
         return response;
     }
+
+
 
 
     static class EduApplyRequest{
